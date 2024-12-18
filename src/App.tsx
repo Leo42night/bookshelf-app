@@ -270,8 +270,10 @@ function App() {
             {/* Section Selesai Dibaca */}
             <section className="bg-white p-6 rounded-lg shadow-md mb-4">
               <h2 className="text-xl font-semibold mb-4">Selesai dibaca</h2>
-              {books.map((book) => (
-                book.isComplete &&
+              {books.map((book) => {
+                if (!book.isComplete) return "";
+                if (searchQuery && !`${book.title.toLowerCase() + book.author.toLowerCase() + book.year.toString()}`.includes(searchQuery)) return "";
+                return (
                 <div key={book.id} className="border border-gray-300 rounded-lg p-4 mb-4">
                   <h3 className="font-semibold text-lg">{book.title}</h3>
                   <p>Penulis: {book.author}</p>
@@ -288,7 +290,8 @@ function App() {
                     </button>
                   </div>
                 </div>
-              ))}
+                )
+              })}
             </section>
           </div>
         </div>
